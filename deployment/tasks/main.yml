@@ -1,0 +1,21 @@
+---
+# tasks file for deployment
+
+  tasks:
+  - name: Stoping tomcat
+    service: name=tomcat state=stopped
+  - copy:
+      src: 
+      dest: /home/vagrant/backup
+    ignore_error: yes
+  - name: remove war file
+    shell: rm -rf /disk2/tomcat/webapp
+
+  - copy:
+      src: /var/lib/jenkins/workspace/Artifact_generation/Spring3HibernateApp/target/Spring3HibernateApp.war
+      dest: /home/ubuntu/disk2/tomcat/webapps/
+
+  - name: restarting service 
+    service: name=tomcat state=restarted
+
+
